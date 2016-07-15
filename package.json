@@ -1,0 +1,17 @@
+{
+  "name": "multichannel-meeting-bot",
+  "version": "0.1.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Peter Garamvolgyi",
+  "license": "MIT",
+  "dependencies": {
+    "botbuilder": "^3.0.1",
+    "deep-equal": "^1.0.1",
+    "deepcopy": "^0.6.3",
+    "restify": "^4.1.1"
+  }
+}
