@@ -33,19 +33,30 @@ intents.matches(roomRegex, [
     }
 ]);
 
-function shouldSend(targetAddress, currentAddress)
-{
+function shouldSend(targetAddress, currentAddress) {
     return !equals(targetAddress.channelId, currentAddress.channelId) ||
            !equals(targetAddress.conversation, currentAddress.conversation);
 }
 
+function reset(session) {
+    var roomName = session.privateConversationData.roomName;
+    delete session.privateConversationData.roomName;
+    delete rooms[roomName];
+}
+
 intents.onDefault([
     function (session, args, next) {
+        if (session.message.text === 'reset') {
+            reset(session);
+            session.send('Reset successful');
+            return;
+        }
+
         if (!session.privateConversationData.roomName) {
             session.send('For connecting to a room, write "connect to [roomname]"');
         } else {
             var roomName = session.privateConversationData.roomName;
-            
+
             if (roomName in rooms)
             {
                 rooms[roomName].forEach(function (message) {
