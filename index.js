@@ -44,6 +44,11 @@ function reset(session) {
     delete rooms[roomName];
 }
 
+function constructName(message)
+{
+    return (message.user.name || message.user.id) + " @ " + message.address.channelId;
+}
+
 intents.onDefault([
     function (session, args, next) {
         if (session.message.text === 'reset') {
@@ -62,7 +67,7 @@ intents.onDefault([
                 rooms[roomName].forEach(function (message) {
                     if (shouldSend(message.address, session.message.address)) {
                         var newMessage = deepcopy(message);
-                        newMessage.text = session.message.text;
+                        newMessage.text = constructName(session.message) + ": " + session.message.text;
                         bot.send(newMessage);
                     }
                 });
